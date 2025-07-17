@@ -1,6 +1,6 @@
 "use client";
 
-import {  SendIcon } from 'lucide-react';
+import { SendIcon } from 'lucide-react';
 import { useState, KeyboardEvent } from 'react';
 import { Button } from './ui/button';
 
@@ -28,23 +28,25 @@ export function InputBar({ onSendMessage, disabled = false }: InputBarProps) {
 
     return (
         <div className="flex flex-col gap-2 p-2 m-2 bg-slate-50 border rounded-3xl border-gray-200">
-            {/* Quick question buttons */}
-            <div className="flex flex-wrap gap-2 p-2">
-                {[
-                    "Quiz me on Canadian history",
-                    "What are citizen rights?",
-                    "Tell me about provinces",
-                    "Test my knowledge"
-                ].map((quickQuestion) => (
-                    <button
-                        key={quickQuestion}
-                        onClick={() => !disabled && onSendMessage(quickQuestion)}
-                        disabled={disabled}
-                        className="text-sm bg-slate-300 hover:bg-slate-400   text-slate-700 px-3 py-1 rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
-                        {quickQuestion}
-                    </button>
-                ))}
+            {/* Quick question buttons - horizontally scrollable */}
+            <div className="overflow-x-auto p-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                <div className="flex gap-2 min-w-max">
+                    {[
+                        "Quiz me on Canadian history",
+                        "What are citizen rights?",
+                        "Tell me about provinces",
+                        "Test my knowledge"
+                    ].map((quickQuestion) => (
+                        <button
+                            key={quickQuestion}
+                            onClick={() => !disabled && onSendMessage(quickQuestion)}
+                            disabled={disabled}
+                            className="text-xs md:text-sm bg-slate-300 hover:bg-slate-400 text-slate-700 px-3 py-1 rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-colors whitespace-nowrap flex-shrink-0"
+                        >
+                            {quickQuestion}
+                        </button>
+                    ))}
+                </div>
             </div>
 
 

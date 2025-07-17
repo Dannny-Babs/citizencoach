@@ -24,12 +24,15 @@ export function MessageBubble({ message }: MessageBubbleProps) {
                 <div className="flex flex-col">
                     {/* Message bubble */}
                     <div
-                        className={`rounded-lg px-4 py-3 ${isUser
-                            ? 'bg-gray-900 text-white'
-                            : 'bg-gray-100 text-gray-900'
+                        className={`rounded-xl ${isUser
+                            ? 'bg-gray-900 text-white px-4  py-3'
+                            : 'bg-none text-gray-900 px-1 py-1'
                             }`}
                     >
-                        <div className="whitespace-pre-wrap break-words text-sm leading-relaxed">
+                        {!isUser && (
+                            <p className="font-semibold text-sm from-red-500 to-purple-700 bg-gradient-to-r bg-clip-text text-transparent">AI Assistant</p>
+                        )}
+                        <div className="whitespace-pre-wrap break-words text-sm md:text-base leading-relaxed">
                             {message.content}
                         </div>
                     </div>

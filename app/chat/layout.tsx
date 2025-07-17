@@ -3,6 +3,7 @@ import { AppSidebar } from "@/components/app-sidebar"
 import { Button } from "@/components/ui/button"
 import { ChevronDownIcon, PlusIcon } from "lucide-react"
 import Image from "next/image"
+import { CredsProvider } from "@/context/credentials"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -25,7 +26,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         {/* Content - Flexible height */}
         <div className="flex-1 overflow-hidden">
-          {children}
+          <CredsProvider>
+            {children}
+          </CredsProvider>
         </div>
       </main>
     </SidebarProvider>
