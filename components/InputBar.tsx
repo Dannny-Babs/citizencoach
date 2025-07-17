@@ -41,7 +41,7 @@ export function InputBar({ onSendMessage, disabled = false }: InputBarProps) {
                             key={quickQuestion}
                             onClick={() => !disabled && onSendMessage(quickQuestion)}
                             disabled={disabled}
-                            className="text-xs md:text-sm bg-slate-300 hover:bg-slate-400 text-slate-700 px-3 py-1 rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-colors whitespace-nowrap flex-shrink-0"
+                            className="text-xs md:text-sm bg-gray-100 hover:bg-gray-200 border text-ln-gray-900 px-3 py-1 rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-colors whitespace-nowrap flex-shrink-0"
                         >
                             {quickQuestion}
                         </button>
@@ -74,7 +74,9 @@ export function InputBar({ onSendMessage, disabled = false }: InputBarProps) {
                     <div className="py-2 px-4 bg-gray-100 rounded-full">
                         <p className="text-xs text-gray-600">ChatGPT 4o Mini</p>
                     </div>
-                    <Button className="bg-red-700 rounded-full py-2 px-2 " onClick={handleSend}>
+                    <Button className="bg-ln-gray-900 hover:bg-ln-gray-800 shadow-ln-button-gray   transition duration-200 ease-out 
+                            outline-none focus:outline-none 
+                            disabled:pointer-events-none rounded-full py-2 px-2 " onClick={handleSend}>
                         Send
                         <SendIcon className="w-4 h-4 text-white" />
                     </Button>

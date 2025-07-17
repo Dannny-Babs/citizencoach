@@ -36,8 +36,26 @@ export function ChatWindow() {
                     // Empty state - centered in the scrollable area
                     <div className="h-full flex items-center justify-center p-6">
                         <div className="text-center max-w-md">
-                            <div className="text-4xl mb-4">🍁</div>
-                            <h3 className="text-lg font-medium mb-2 text-gray-900">Welcome to your Citizenship Coach!</h3>
+                            <div className="flex justify-center mb-2">
+                                <div
+                                    className="relative flex w-[120px] h-[120px] shrink-0 items-center justify-center rounded-full"
+                                    style={{ background: 'linear-gradient(rgba(123, 123, 123, 0.1) 0%, rgba(123, 123, 123, 0) 100%)' }}
+                                >
+                                    <div
+                                        className="relative z-10 flex w-20 h-20 items-center justify-center rounded-full bg-white"
+                                        style={{
+                                            boxShadow: 'rgba(16, 16, 16, 0.06) 0px 4px 8px, rgba(16, 16, 16, 0.04) 0px 2px 4px, rgba(16, 16, 16, 0.04) 0px 1px 2px, rgba(16, 16, 16, 0.06) 0px 0px 0px 1px, rgba(61, 61, 61, 0.08) 0px -0.5px 0.5px inset'
+                                        }}
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="650" height="650" viewBox="-2015 -2000 4030 4030" className="w-12 h-12">
+                                            <title>maple leaf from the flag of Canada</title>
+                                            <path fill="#f00" d="m-90 2030 45-863a95 95 0 0 0-111-98l-859 151 116-320a65 65 0 0 0-20-73l-941-762 212-99a65 65 0 0 0 34-79l-186-572 542 115a65 65 0 0 0 73-38l105-247 423 454a65 65 0 0 0 111-57l-204-1052 327 189a65 65 0 0 0 91-27l332-652 332 652a65 65 0 0 0 91 27l327-189-204 1052a65 65 0 0 0 111 57l423-454 105 247a65 65 0 0 0 73 38l542-115-186 572a65 65 0 0 0 34 79l212 99-941 762a65 65 0 0 0-20 73l116 320-859-151a95 95 0 0 0-111 98l45 863z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 className="text-xl font-medium mb-2 text-ln-gray-900">Welcome to your Citizenship Coach!</h3>
                             <p className="text-sm text-gray-600 mb-6">Start by asking a question about Canadian citizenship, history, or government.</p>
                             <div className="space-y-2">
                                 <button

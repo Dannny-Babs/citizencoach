@@ -1,9 +1,10 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
-import { Button } from "@/components/ui/button"
-import { ChevronDownIcon, PlusIcon } from "lucide-react"
+import { ChevronDownIcon } from "lucide-react"
 import Image from "next/image"
 import { CredsProvider } from "@/context/credentials"
+import { CredsModal } from "@/components/CredsModal"
+
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -18,10 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <p className="text-sm text-gray-500">ChatGPT 4o Mini</p>
             <ChevronDownIcon className="w-4 h-4" />
           </div>
-          <Button variant="outline" size="sm">
-            <PlusIcon className="w-4 h-4" />
-            Switch Models
-          </Button>
+          <CredsModal />
         </div>
 
         {/* Content - Flexible height */}
