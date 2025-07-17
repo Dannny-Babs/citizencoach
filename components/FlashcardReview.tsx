@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { useFlashcards, Flashcard } from '../hooks/useFlashcards';
+import { useFlashcards } from '../hooks/useFlashcards';
 
 export function FlashcardReview() {
     const { flashcards, updateFlashcard, getDueFlashcards } = useFlashcards();
@@ -17,7 +17,7 @@ export function FlashcardReview() {
 
         // Simple spaced repetition algorithm
         const now = new Date();
-        let nextReviewDate = new Date(now);
+        const nextReviewDate = new Date(now);
 
         switch (difficulty) {
             case 'easy':

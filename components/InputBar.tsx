@@ -1,6 +1,6 @@
 "use client";
 
-import { PlusIcon, SendIcon } from 'lucide-react';
+import {  SendIcon } from 'lucide-react';
 import { useState, KeyboardEvent } from 'react';
 import { Button } from './ui/button';
 
@@ -48,7 +48,7 @@ export function InputBar({ onSendMessage, disabled = false }: InputBarProps) {
             </div>
 
 
-            <div className="flex flex-col items-end space-y-2 border rounded-3xl border-gray-200 p-4 bg-white">
+            <div className="flex flex-col items-end space-y-2 border rounded-3xl border-gray-200 p-2 bg-white">
                 <textarea
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
@@ -69,7 +69,9 @@ export function InputBar({ onSendMessage, disabled = false }: InputBarProps) {
                 />
 
                 <div className="flex flex-row w-full items-center justify-between">
-                    <PlusIcon className="w-4 h-4 text-gray-500" />
+                    <div className="p-2 bg-slate-100 rounded-full">
+                        <p className="text-xs text-gray-500">ChatGPT 4o Mini</p>
+                    </div>
                     <Button className="bg-black rounded-full py-2 px-2 " onClick={handleSend}>
                         <SendIcon className="w-4 h-4 text-white" />
                     </Button>

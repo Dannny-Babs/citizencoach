@@ -7,7 +7,7 @@ type ViewMode = 'topics' | 'flashcards' | 'progress';
 
 
 export function StudyDashboard() {
-    const [viewMode, setViewMode] = useState<ViewMode>('topics');
+    const [viewMode] = useState<ViewMode>('topics');
 
     const topics = [
         { name: 'Canadian History', progress: 85, questions: 45, color: 'bg-red-100 text-red-700' },
