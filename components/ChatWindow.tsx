@@ -38,7 +38,7 @@ export function ChatWindow() {
                         Canadian Citizenship Quiz Coach
                     </h1>
                 </div>
-                <p className="text-sm text-gray-600 mt-1">
+                <p className="text-sm text-gray-400 mt-1">
                     Ask me anything about Canadian history, geography, government, or citizenship requirements
                 </p>
             </div>
@@ -50,7 +50,7 @@ export function ChatWindow() {
                         <div className="text-4xl mb-4">🍁</div>
                         <h3 className="text-lg font-medium mb-2">Welcome to your Citizenship Coach!</h3>
                         <p className="text-sm">Start by asking a question about Canadian citizenship, history, or government.</p>
-                        <div className="mt-4 space-y-2 text-xs">
+                        <div className="mt-4 space-y-2 text-xs space-x-2" >
                             <p className="bg-gray-50 rounded p-2 inline-block">
                                 &quot;What are the rights and responsibilities of Canadian citizens?&quot;
                             </p>

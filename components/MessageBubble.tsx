@@ -11,7 +11,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
 
     return (
         <div className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}>
-            <div className="flex items-start space-x-2 max-w-2xl">
+            <div className="flex items-start space-x-2 max-w-lg">
                 {!isUser && (
                     <div className="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
                         <span className="text-red-600 text-sm">🍁</span>
@@ -20,7 +20,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
 
                 <div
                     className={`rounded-lg px-4 py-2 ${isUser
-                        ? 'bg-black text-white ml-8'
+                        ? 'bg-slate-900 text-white ml-8'
                         : 'bg-gray-100 text-gray-900'
                         }`}
                 >
@@ -42,11 +42,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
                     )}
                 </div>
 
-                {isUser && (
-                    <div className="flex-shrink-0 w-8 h-8 bg-black rounded-full flex items-center justify-center">
-                        <span className="text-white text-sm">👤</span>
-                    </div>
-                )}
+                
             </div>
         </div>
     );
