@@ -1,7 +1,8 @@
-import {  Home, Inbox, MessageCircle,  Settings } from "lucide-react"
-
+import { Inbox, MessageCircle, Settings } from "lucide-react"
+import * as React from "react"
 import {
   Sidebar,
+  SidebarHeader,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
@@ -12,50 +13,81 @@ import {
 } from "@/components/ui/sidebar"
 
 // Menu items.
-const items = [
-  {
-    title: "Home",
-    url: "/chat",
-    icon: Home,
-  },
-  {
-    title: "Review",
-    url: "/review",
-    icon: Inbox,
-  },
-  {
-    title: "Chat",
-    url: "/chat",
-    icon: MessageCircle,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
-]
+const data = {
+  navMain: [
+    {
+      title: "Main",
+      url: "#",
+      items: [
+        {
+          title: "Chat",
+          url: "/chat",
+          icon: MessageCircle,
+          isActive: true
+        },
+        {
+          title: "Review",
+          url: "/review",
+          icon: Inbox,
+        },
+
+        {
+          title: "Settings",
+          url: "#",
+          icon: Settings,
+        },
+      ],
+    },
+    {
+      title: "Modules",
+      url: "#",
+      items: [
+        {
+          title: "History",
+          url: "#",
+          icon: Inbox,
+          isActive: false
+        },
+        {
+          title: "Geography",
+          url: "#",
+          icon: Inbox,
+        },
+        {
+          title: "Rights",
+          url: "#",
+          icon: Inbox,
+        },
+
+
+      ]
+    }
+  ]
+}
 
 export function AppSidebar() {
   return (
-    <Sidebar className="border-none ">
+    <Sidebar className="border-none font-sans bg-ln-gray-900">
+      <SidebarHeader>
+      </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Main</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {/* We create a SidebarGroup for each parent. */}
+        {data.navMain.map((item) => (
+          <SidebarGroup key={item.title}>
+            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {item.items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild isActive={item.isActive}>
+                      <a href={item.url}>{item.title}</a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
       </SidebarContent>
     </Sidebar>
   )

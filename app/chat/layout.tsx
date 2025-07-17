@@ -1,19 +1,17 @@
 "use client"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
-import { ChevronDownIcon } from "lucide-react"
-import Image from "next/image"
-import { CredsContext, CredsProvider } from "@/context/credentials"
+import { CredsProvider } from "@/context/credentials"
 import { CredsModal } from "@/components/CredsModal"
 import { ModelSwitcher } from "@/components/modelSwithcer"
 import { useChat } from "@/hooks/useChat"
-import { useContext } from "react"
+import { Toaster } from "sonner"
 
 
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 
-  const { creds } = useContext(CredsContext)
+
   const { provider, setProvider, model, setModel } = useChat()
   return (
     <SidebarProvider className="bg-sidebar">
@@ -40,6 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </CredsProvider>
         </div>
       </main>
+      <Toaster />
     </SidebarProvider>
   )
 }
