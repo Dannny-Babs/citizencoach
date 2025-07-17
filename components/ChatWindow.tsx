@@ -29,7 +29,7 @@ export function ChatWindow() {
     };
 
     return (
-        <div className="h-screen flex flex-col bg-white relative">
+        <div className="h-full flex flex-col bg-white relative">
             {/* Scrollable messages area */}
             <div className="flex-1 overflow-y-auto pb-16">
                 {messages.length === 0 ? (
