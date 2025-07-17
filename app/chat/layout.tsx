@@ -1,12 +1,20 @@
+"use client"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import { ChevronDownIcon } from "lucide-react"
 import Image from "next/image"
-import { CredsProvider } from "@/context/credentials"
+import { CredsContext, CredsProvider } from "@/context/credentials"
 import { CredsModal } from "@/components/CredsModal"
+import { ModelSwitcher } from "@/components/modelSwithcer"
+import { useChat } from "@/hooks/useChat"
+import { useContext } from "react"
+
 
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+
+  const { creds } = useContext(CredsContext)
+  const { provider, setProvider, model, setModel } = useChat()
   return (
     <SidebarProvider className="bg-sidebar">
       <AppSidebar />
@@ -15,9 +23,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="flex flex-row justify-between items-center p-4 border-b border-gray-200 flex-shrink-0">
           <div className="flex flex-row items-center space-x-2">
             <SidebarTrigger />
-            <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Maple_Leaf.svg/1200px-Maple_Leaf.svg.png?20190127193104" alt="CitizenCoach" width={24} height={24} />
-            <p className="text-sm text-gray-500">ChatGPT 4o Mini</p>
-            <ChevronDownIcon className="w-4 h-4" />
+            <ModelSwitcher
+              provider={provider}
+              model={model}
+              setProvider={setProvider}
+              setModel={setModel}
+            />
           </div>
           <CredsModal />
         </div>

@@ -2,10 +2,13 @@
 
 import { useState, useCallback } from "react";
 import { Message } from "../components/ChatWindow";
+import type { Provider } from "@/utils/llmClient";
 
 export function useChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [provider, setProvider] = useState<Provider>("openai");
+  const [model, setModel] = useState("gpt-4o-mini");
 
   const sendMessage = useCallback(
     async (content: string) => {
@@ -74,5 +77,9 @@ export function useChat() {
     isLoading,
     sendMessage,
     clearChat,
+    provider,
+    setProvider,
+    model,
+    setModel,
   };
 }
