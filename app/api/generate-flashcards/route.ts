@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { getFlashcardPrompt } from "../../../utils/promptTemplates";
 import { callLLM, type Provider } from "../../../utils/llmClient";
 
+// Define Message type to match llmClient
+type Message = {
+  role: "system" | "user" | "assistant";
+  content: string;
+};
+
 interface RequestBody {
   content: string;
   provider?: Provider;
@@ -54,7 +60,7 @@ export async function POST(request: NextRequest) {
 
     // Prepare the flashcard generation prompt
     const flashcardPrompt = getFlashcardPrompt(content);
-    const messages = [
+    const messages: Message[] = [
       { role: "system", content: flashcardPrompt },
       {
         role: "user",

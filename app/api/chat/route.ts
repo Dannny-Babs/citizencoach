@@ -2,13 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { getCitizenshipPrompt } from "../../../utils/promptTemplates";
 import { callLLM, type Provider } from "../../../utils/llmClient";
 
-interface ChatMessage {
-  role: "user" | "assistant" | "system";
+// Define Message type to match llmClient
+type Message = {
+  role: "system" | "user" | "assistant";
   content: string;
-}
+};
 
 interface RequestBody {
-  messages: ChatMessage[];
+  messages: Message[];
   provider?: Provider;
   model?: string;
   openaiKey?: string;
@@ -59,7 +60,7 @@ export async function POST(request: NextRequest) {
 
     // Prepare messages with system prompt
     const systemPrompt = getCitizenshipPrompt();
-    const chatMessages: ChatMessage[] = [
+    const chatMessages: Message[] = [
       { role: "system", content: systemPrompt },
       ...messages,
     ];
