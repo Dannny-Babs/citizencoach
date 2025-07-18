@@ -1,6 +1,6 @@
 
 import * as React from "react"
-import { ChatRoundLine, Notes, Tuning2, Document,HeadphonesRound } from '@solar-icons/react/ssr'
+import { ChatRoundLine, Notes, Tuning2, Document, HeadphonesRound } from '@solar-icons/react/ssr'
 import {
   Sidebar,
   SidebarHeader,
@@ -80,17 +80,18 @@ const data = {
 
 export function AppSidebar() {
   return (
-    <Sidebar className="border-none font-sans ">
+    <Sidebar className="border-none font-sans bg-ln-gray-25">
       <SidebarHeader>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center justify-between py-2 px-3 bg-ln-gray-0 border rounded-xl border-gray-200">
+          <div className="flex items-center space-x-2">
 
-          <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Maple_Leaf.svg/1200px-Maple_Leaf.svg.png?20190127193104" alt="CitizenCoach" width={32} height={32} />
-          <div>
+            <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Maple_Leaf.svg/1200px-Maple_Leaf.svg.png?20190127193104" alt="CitizenCoach" width={24} height={24} />
+      
 
-            <h1 className="text-xl font-bold text-red-600">CitizenCoach</h1>
-            <p className="text-sm text-gray-600"> Your AI powered coach</p>
+              <h1 className="text-lg font-bold text-red-600">CitizenCoach</h1>
+          
           </div>
-
+          <ChatRoundLine size={16} color='#1e1e1e' />
         </div>
       </SidebarHeader>
       <SidebarContent>
