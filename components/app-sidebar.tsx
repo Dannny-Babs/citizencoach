@@ -30,7 +30,7 @@ const data = {
         },
         {
           title: "Review",
-          url: "/review",
+          url: "/chat/review",
           icon: () => <Notes size={32} color='#1e1e1e' />,
         },
 

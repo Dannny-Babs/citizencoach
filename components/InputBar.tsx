@@ -110,21 +110,27 @@ export function InputBar({ onSendMessage, disabled = false, provider, model }: I
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="start" className="w-56">
                             <DropdownMenuItem
-                                onClick={() => console.log('Attach image clicked')}
+                                onClick={() => {
+                                    // TODO: Implement image attachment functionality
+                                }}
                                 className="flex items-center gap-2 cursor-pointer"
                             >
                                 <ImagePlus className="w-4 h-4" />
                                 <span>Attach Image</span>
                             </DropdownMenuItem>
                             <DropdownMenuItem
-                                onClick={() => console.log('Upload document clicked')}
+                                onClick={() => {
+                                    // TODO: Implement document upload functionality
+                                }}
                                 className="flex items-center gap-2 cursor-pointer"
                             >
                                 <FileText className="w-4 h-4" />
                                 <span>Upload Document</span>
                             </DropdownMenuItem>
                             <DropdownMenuItem
-                                onClick={() => console.log('Take picture clicked')}
+                                onClick={() => {
+                                    // TODO: Implement camera functionality
+                                }}
                                 className="flex items-center gap-2 cursor-pointer"
                             >
                                 <Camera className="w-4 h-4" />

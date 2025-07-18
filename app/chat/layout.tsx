@@ -7,12 +7,9 @@ import { ModelSwitcher } from "@/components/modelSwithcer"
 import { useChat } from "@/hooks/useChat"
 import { Toaster } from "sonner"
 
-
-
-export default function Layout({ children }: { children: React.ReactNode }) {
-
-
+function LayoutContent({ children }: { children: React.ReactNode }) {
   const { provider, setProvider, model, setModel } = useChat()
+
   return (
     <SidebarProvider className="bg-ln-gray-25">
       <AppSidebar />
@@ -33,12 +30,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         {/* Content - Flexible height */}
         <div className="flex-1 overflow-hidden">
-          <CredsProvider>
-            {children}
-          </CredsProvider>
+          {children}
         </div>
       </main>
       <Toaster />
     </SidebarProvider>
+  )
+}
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <CredsProvider>
+      <LayoutContent>{children}</LayoutContent>
+    </CredsProvider>
   )
 }
