@@ -5,6 +5,9 @@ import { MessageBubble } from './MessageBubble';
 import { InputBar } from './InputBar';
 import { useChat } from '../hooks/useChat';
 
+import { IOSpinner } from './spinner'
+import { motion, AnimatePresence } from 'framer-motion'
+
 export interface Message {
     id: string;
     content: string;
@@ -31,7 +34,7 @@ export function ChatWindow() {
     return (
         <div className="h-full flex flex-col bg-white relative">
             {/* Scrollable messages area */}
-            <div className="flex-1 overflow-y-auto pb-16">
+            <div className="flex-1 overflow-y-auto pb-16 md:pb-32">
                 {messages.length === 0 ? (
                     // Empty state - centered in the scrollable area
                     <div className="h-full flex items-center justify-center p-6">
@@ -91,14 +94,9 @@ export function ChatWindow() {
 
                         {/* Loading indicator */}
                         {isLoading && (
-                            <div className="flex justify-start">
-                                <div className="bg-gray-200 rounded-lg p-3 max-w-xs">
-                                    <div className="flex space-x-1">
-                                        <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
-                                        <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                                        <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                                    </div>
-                                </div>
+                            <div className="flex justify-start gap-2 items-center">
+                                 <IOSpinner />
+                                <p className="text-sm">Generating Response</p>
                             </div>
                         )}
 

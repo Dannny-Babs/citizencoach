@@ -1,5 +1,6 @@
-import { Inbox, MessageCircle, Settings } from "lucide-react"
+
 import * as React from "react"
+import { ChatRoundLine, Notes, Tuning2, Document,HeadphonesRound } from '@solar-icons/react/ssr'
 import {
   Sidebar,
   SidebarHeader,
@@ -11,6 +12,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import Image from "next/image";
+import Link from "next/link";
 
 // Menu items.
 const data = {
@@ -22,19 +25,24 @@ const data = {
         {
           title: "Chat",
           url: "/chat",
-          icon: MessageCircle,
+          icon: () => <ChatRoundLine size={32} color='#1e1e1e' />,
           isActive: true
         },
         {
           title: "Review",
           url: "/review",
-          icon: Inbox,
+          icon: () => <Notes size={32} color='#1e1e1e' />,
         },
 
         {
           title: "Settings",
           url: "#",
-          icon: Settings,
+          icon: () => <Tuning2 size={32} color='#1e1e1e' />,
+        },
+        {
+          title: "Help",
+          url: "#",
+          icon: () => <HeadphonesRound size={32} color='#1e1e1e' />,
         },
       ],
     },
@@ -45,19 +53,24 @@ const data = {
         {
           title: "History",
           url: "#",
-          icon: Inbox,
+          icon: () => <Document size={32} color='#1e1e1e' />,
           isActive: false
         },
         {
           title: "Geography",
           url: "#",
-          icon: Inbox,
+          icon: () => <Document size={32} color='#1e1e1e' />,
         },
         {
           title: "Rights",
           url: "#",
-          icon: Inbox,
+          icon: () => <Document size={32} color='#1e1e1e' />,
         },
+        {
+          title: "Civics",
+          url: "#",
+          icon: () => <Document size={32} color='#1e1e1e' />,
+        }
 
 
       ]
@@ -67,8 +80,18 @@ const data = {
 
 export function AppSidebar() {
   return (
-    <Sidebar className="border-none font-sans bg-ln-gray-900">
+    <Sidebar className="border-none font-sans ">
       <SidebarHeader>
+        <div className="flex items-center space-x-2">
+
+          <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Maple_Leaf.svg/1200px-Maple_Leaf.svg.png?20190127193104" alt="CitizenCoach" width={32} height={32} />
+          <div>
+
+            <h1 className="text-xl font-bold text-red-600">CitizenCoach</h1>
+            <p className="text-sm text-gray-600"> Your AI powered coach</p>
+          </div>
+
+        </div>
       </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
@@ -78,9 +101,12 @@ export function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 {item.items.map((item) => (
-                  <SidebarMenuItem key={item.title}>
+                  <SidebarMenuItem key={item.title} >
                     <SidebarMenuButton asChild isActive={item.isActive}>
-                      <a href={item.url}>{item.title}</a>
+                      <a href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}

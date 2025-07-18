@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const { provider, setProvider, model, setModel } = useChat()
   return (
-    <SidebarProvider className="bg-sidebar">
+    <SidebarProvider className="bg-ln-gray-25">
       <AppSidebar />
       <main className="flex-1 flex flex-col bg-white border border-gray-200 rounded-xl m-2 overflow-hidden font-sans">
         {/* Header - Fixed height */}
