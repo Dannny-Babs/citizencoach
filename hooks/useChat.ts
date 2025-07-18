@@ -1,14 +1,16 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useContext } from "react";
 import { Message } from "../components/ChatWindow";
 import type { Provider } from "@/utils/llmClient";
+import { CredsContext } from "@/context/credentials";
 
 export function useChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [provider, setProvider] = useState<Provider>("openai");
   const [model, setModel] = useState("gpt-4o-mini");
+  const { creds } = useContext(CredsContext);
 
   const sendMessage = useCallback(
     async (content: string) => {
@@ -33,6 +35,10 @@ export function useChat() {
               role: msg.role,
               content: msg.content,
             })),
+            provider,
+            model,
+            openaiKey: creds.openaiKey,
+            geminiKey: creds.geminiKey,
           }),
         });
 
@@ -65,7 +71,7 @@ export function useChat() {
         setIsLoading(false);
       }
     },
-    [messages]
+    [messages, provider, model, creds]
   );
 
   const clearChat = useCallback(() => {

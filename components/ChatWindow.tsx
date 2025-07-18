@@ -4,9 +4,7 @@ import { useRef, useEffect } from 'react';
 import { MessageBubble } from './MessageBubble';
 import { InputBar } from './InputBar';
 import { useChat } from '../hooks/useChat';
-
 import { IOSpinner } from './spinner'
-import { motion, AnimatePresence } from 'framer-motion'
 
 export interface Message {
     id: string;

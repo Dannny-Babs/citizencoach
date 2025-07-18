@@ -1,14 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCitizenshipPrompt } from "../../../utils/promptTemplates";
+import { callLLM, type Provider } from "../../../utils/llmClient";
 
 interface ChatMessage {
   role: "user" | "assistant" | "system";
   content: string;
 }
 
+interface RequestBody {
+  messages: ChatMessage[];
+  provider?: Provider;
+  model?: string;
+  openaiKey?: string;
+  geminiKey?: string;
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const { messages } = await request.json();
+    const {
+      messages,
+      provider = "openai",
+      model = "gpt-4o-mini",
+      openaiKey,
+      geminiKey,
+    }: RequestBody = await request.json();
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
@@ -17,12 +32,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check for OpenAI API key
-    const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) {
+    // Get API keys from environment or request
+    const creds = {
+      openaiKey: openaiKey || process.env.OPENAI_API_KEY,
+      geminiKey: geminiKey || process.env.GEMINI_API_KEY,
+    };
+
+    // Validate required API key based on provider
+    if (provider === "openai" && !creds.openaiKey) {
       return NextResponse.json(
-        { error: "OpenAI API key not configured" },
-        { status: 500 }
+        { error: "OpenAI API key not provided" },
+        { status: 400 }
+      );
+    }
+
+    if (provider === "gemini" && !creds.geminiKey) {
+      return NextResponse.json(
+        { error: "Gemini API key not provided" },
+        { status: 400 }
       );
     }
 
@@ -33,36 +60,13 @@ export async function POST(request: NextRequest) {
       ...messages,
     ];
 
-    // Call OpenAI API
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini", // Cost-effective model for coaching
-        messages: chatMessages,
-        max_tokens: 1000,
-        temperature: 0.7,
-        presence_penalty: 0.1,
-        frequency_penalty: 0.1,
-      }),
+    // Call LLM using our enhanced client
+    const aiResponse = await callLLM(provider, model, chatMessages, creds, {
+      maxRetries: 3,
+      maxTokens: provider === "openai" ? 1000 : 2000,
     });
 
-    if (!response.ok) {
-      const error = await response.text();
-      console.error("OpenAI API error:", error);
-      return NextResponse.json(
-        { error: "Failed to get AI response" },
-        { status: response.status }
-      );
-    }
-
-    const data = await response.json();
-    const aiMessage = data.choices[0]?.message?.content;
-
-    if (!aiMessage) {
+    if (!aiResponse) {
       return NextResponse.json(
         { error: "No response from AI" },
         { status: 500 }
@@ -70,11 +74,35 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({
-      content: aiMessage,
-      usage: data.usage,
+      content: aiResponse,
+      provider,
+      model,
     });
   } catch (error) {
     console.error("Chat API error:", error);
+
+    // Return more specific error messages
+    if (error instanceof Error) {
+      if (error.message.includes("API key")) {
+        return NextResponse.json(
+          { error: "Invalid or missing API key" },
+          { status: 401 }
+        );
+      }
+      if (error.message.includes("rate_limit")) {
+        return NextResponse.json(
+          { error: "Rate limit exceeded. Please try again later." },
+          { status: 429 }
+        );
+      }
+      if (error.message.includes("insufficient_quota")) {
+        return NextResponse.json(
+          { error: "API quota exceeded. Please check your account." },
+          { status: 402 }
+        );
+      }
+    }
+
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
