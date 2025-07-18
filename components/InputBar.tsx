@@ -1,16 +1,44 @@
 "use client";
 
-import { SendIcon } from 'lucide-react';
-import { useState, KeyboardEvent } from 'react';
+import { SendIcon, Plus, ImagePlus, FileText, Camera } from 'lucide-react';
+import { useState, KeyboardEvent, useEffect } from 'react';
 import { Button } from './ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+
+import type { Provider } from "@/utils/llmClient";
 
 interface InputBarProps {
     onSendMessage: (message: string) => void;
     disabled?: boolean;
+    provider: Provider;
+    model: string;
 }
 
-export function InputBar({ onSendMessage, disabled = false }: InputBarProps) {
+export function InputBar({ onSendMessage, disabled = false, provider, model }: InputBarProps) {
     const [message, setMessage] = useState('');
+    const [currentModel, setCurrentModel] = useState(model);
+
+    useEffect(() => {
+        setCurrentModel(model);
+    }, [model]);
+
+    const getDisplayName = (modelId: string) => {
+        const names: Record<string, string> = {
+            'gpt-4': 'GPT-4',
+            'gpt-4-turbo': 'GPT-4 Turbo',
+            'gpt-3.5-turbo': 'GPT-3.5 Turbo',
+            'gpt-4o-mini': 'GPT-4o Mini',
+            'gemini-pro': 'Gemini Pro',
+            'gemini-pro-vision': 'Gemini Pro Vision',
+            'gemini-ultra': 'Gemini Ultra',
+        };
+        return names[modelId] || modelId;
+    };
 
     const handleSend = () => {
         if (message.trim() && !disabled) {
@@ -71,9 +99,39 @@ export function InputBar({ onSendMessage, disabled = false }: InputBarProps) {
                 />
 
                 <div className="flex flex-row w-full items-center justify-between">
-                    <div className="py-2 px-4 bg-gray-100 rounded-full">
-                        <p className="text-xs text-gray-600">ChatGPT 4o Mini</p>
-                    </div>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <button
+                                className="py-2 px-3 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
+                                aria-label="Attachment options"
+                            >
+                                <Plus className="w-4 h-4 text-gray-600" />
+                            </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="start" className="w-56">
+                            <DropdownMenuItem
+                                onClick={() => console.log('Attach image clicked')}
+                                className="flex items-center gap-2 cursor-pointer"
+                            >
+                                <ImagePlus className="w-4 h-4" />
+                                <span>Attach Image</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => console.log('Upload document clicked')}
+                                className="flex items-center gap-2 cursor-pointer"
+                            >
+                                <FileText className="w-4 h-4" />
+                                <span>Upload Document</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() => console.log('Take picture clicked')}
+                                className="flex items-center gap-2 cursor-pointer"
+                            >
+                                <Camera className="w-4 h-4" />
+                                <span>Take a Picture</span>
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                     <Button className="bg-ln-gray-900 hover:bg-ln-gray-800 shadow-ln-button-gray   transition duration-200 ease-out 
                             outline-none focus:outline-none 
                             disabled:pointer-events-none rounded-full py-2 px-2 " onClick={handleSend}>

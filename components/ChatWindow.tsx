@@ -17,7 +17,7 @@ export interface Message {
 
 export function ChatWindow() {
     const messagesEndRef = useRef<HTMLDivElement>(null);
-    const { messages, isLoading, sendMessage } = useChat();
+    const { messages, isLoading, sendMessage, provider, model } = useChat();
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -95,7 +95,7 @@ export function ChatWindow() {
                         {/* Loading indicator */}
                         {isLoading && (
                             <div className="flex justify-start gap-2 items-center">
-                                 <IOSpinner />
+                                <IOSpinner />
                                 <p className="text-sm">Generating Response</p>
                             </div>
                         )}
@@ -107,7 +107,7 @@ export function ChatWindow() {
 
             {/* Static input bar - positioned absolutely */}
             <div className="absolute bottom-0 left-0 right-0 bg-white">
-                <InputBar onSendMessage={handleSendMessage} disabled={isLoading} />
+                <InputBar onSendMessage={handleSendMessage} disabled={isLoading} provider={provider} model={model} />
             </div>
         </div>
     );

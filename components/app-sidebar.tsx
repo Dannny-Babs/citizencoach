@@ -1,6 +1,6 @@
 
 import * as React from "react"
-import { ChatRoundLine, Notes, Tuning2, Document, HeadphonesRound } from '@solar-icons/react/ssr'
+import { ChatRoundLine, Magnifer, Notes, Tuning2, Document, HeadphonesRound } from '@solar-icons/react/ssr'
 import {
   Sidebar,
   SidebarHeader,
@@ -91,7 +91,7 @@ export function AppSidebar() {
               <h1 className="text-lg font-bold text-red-600">CitizenCoach</h1>
           
           </div>
-          <ChatRoundLine size={16} color='#1e1e1e' />
+          <Magnifer size={16} color='#1e1e1e' />
         </div>
       </SidebarHeader>
       <SidebarContent>
