@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Rethink_Sans } from "next/font/google";
 import "./globals.css";
 import { FlashcardProvider } from "../context/FlashcardContext";
+import { Analytics } from "@vercel/analytics/next"
 
 const rethinkSans = Rethink_Sans({
   variable: "--font-rethink-sans",
@@ -24,6 +25,7 @@ export default function RootLayout({
         className={`${rethinkSans.variable} antialiased`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );

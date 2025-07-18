@@ -7,6 +7,7 @@ import { ModelSwitcher } from "@/components/modelSwithcer"
 import { useChat } from "@/hooks/useChat"
 import { Toaster } from "sonner"
 import { FlashcardProvider } from "@/context/FlashcardContext";
+import { Analytics } from "@vercel/analytics/next"
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const { provider, setProvider, model, setModel } = useChat()
@@ -35,6 +36,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
         </div>
       </main>
       <Toaster />
+      <Analytics />
     </SidebarProvider>
   )
 }

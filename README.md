@@ -42,9 +42,16 @@ An AI-powered citizenship test preparation platform for Canadian citizenship app
    # or
    pnpm install
    ```
+   
+   > **Note**: If you see a warning about multiple lockfiles, you can safely ignore it. The build will use the appropriate lockfile automatically.
 
 3. **Set up environment variables**
-   Create a `.env.local` file in the root directory:
+   Copy the example environment file and fill in your API keys:
+   ```bash
+   cp env.example .env.local
+   ```
+   
+   Then edit `.env.local` and add your API keys:
    ```env
    OPENAI_API_KEY=your_openai_api_key_here
    GEMINI_API_KEY=your_gemini_api_key_here
