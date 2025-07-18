@@ -117,11 +117,11 @@ export default function Home() {
           variants={staggerContainer}
         >
           <motion.div className="flex flex-col sm:flex-row gap-4 justify-center" variants={staggerContainer}>
-            <motion.div className="w-1/3" variants={scaleIn}>
-              <Image src="https://universitysettlement.ca/wp-content/uploads/2022/02/us_website_citizenship_840x520.jpg" alt="CitizenCoach" width={600} height={1200} className="rounded-lg object-cover h-96 w-full" />
+            <motion.div className="w-full sm:w-1/3" variants={scaleIn}>
+              <Image src="https://universitysettlement.ca/wp-content/uploads/2022/02/us_website_citizenship_840x520.jpg" alt="CitizenCoach" width={600} height={1200} className="rounded-lg object-cover h-64 sm:h-96 w-full" />
             </motion.div>
-            <motion.div className="w-2/3" variants={scaleIn}>
-              <Image src="https://www.visaplace.com/wp-content/uploads/2020/01/taking-oath-1.jpg" alt="CitizenCoach" width={1200} height={1200} className="rounded-lg object-cover h-96 w-full  " />
+            <motion.div className="w-full sm:w-2/3" variants={scaleIn}>
+              <Image src="https://www.visaplace.com/wp-content/uploads/2020/01/taking-oath-1.jpg" alt="CitizenCoach" width={1200} height={1200} className="rounded-lg object-cover h-64 sm:h-96 w-full" />
             </motion.div>
           </motion.div>
         </motion.div>
@@ -163,7 +163,7 @@ export default function Home() {
           className="bg-slate-50 border border-slate-100 rounded-3xl p-12 w-full flex flex-col sm:flex-row gap-4"
           variants={fadeInUp}
         >
-          <div className="mb-6  w-1/3">
+          <div className="mb-6  w-full md:w-1/3">
 
             <h3 className="text-xl font-semibold text-gray-900 mb-3">AI-Powered Coach</h3>
             <p className="text-gray-600 leading-relaxed text-sm">
