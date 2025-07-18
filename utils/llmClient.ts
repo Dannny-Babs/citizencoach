@@ -184,7 +184,10 @@ async function handleStreamingResponse(
             if (provider === "openai") {
               content = parsed.choices?.[0]?.delta?.content || "";
             } else if (provider === "gemini") {
-              content = parsed.candidates?.[0]?.content?.parts?.[0]?.text || "";
+              content =
+                parsed.candidates?.[0]?.content?.parts?.[0]?.text ||
+                parsed.candidates?.[0]?.delta?.parts?.[0]?.text ||
+                "";
             }
 
             if (content) {
@@ -260,22 +263,48 @@ async function callGemini(
     const endpoint = stream ? "streamGenerateContent" : "generateContent";
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:${endpoint}?key=${apiKey}`;
 
+    // Convert messages to Gemini format
+    const geminiContents = [];
+    let systemInstruction = "";
+
+    for (const message of chunkedMessages) {
+      if (message.role === "system") {
+        // Gemini handles system messages as systemInstruction
+        systemInstruction = message.content;
+      } else if (message.role === "user") {
+        geminiContents.push({
+          role: "user",
+          parts: [{ text: message.content }],
+        });
+      } else if (message.role === "assistant") {
+        geminiContents.push({
+          role: "model", // Gemini uses "model" instead of "assistant"
+          parts: [{ text: message.content }],
+        });
+      }
+    }
+
+    const requestBody: any = {
+      contents: geminiContents,
+      generationConfig: {
+        temperature: 0.7,
+        topK: 40,
+        topP: 0.95,
+        maxOutputTokens: options.maxTokens || 2048,
+      },
+    };
+
+    // Add system instruction if present
+    if (systemInstruction) {
+      requestBody.systemInstruction = {
+        parts: [{ text: systemInstruction }],
+      };
+    }
+
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [
-              {
-                text: chunkedMessages
-                  .map((m) => `${m.role}: ${m.content}`)
-                  .join("\n\n"),
-              },
-            ],
-          },
-        ],
-      }),
+      body: JSON.stringify(requestBody),
     });
 
     if (!response.ok) {

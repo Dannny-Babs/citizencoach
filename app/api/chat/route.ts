@@ -20,10 +20,14 @@ export async function POST(request: NextRequest) {
     const {
       messages,
       provider = "openai",
-      model = "gpt-4o-mini",
+      model,
       openaiKey,
       geminiKey,
     }: RequestBody = await request.json();
+
+    // Set default model based on provider
+    const selectedModel =
+      model || (provider === "openai" ? "gpt-4o-mini" : "gemini-2.0-flash");
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
@@ -61,10 +65,16 @@ export async function POST(request: NextRequest) {
     ];
 
     // Call LLM using our enhanced client
-    const aiResponse = await callLLM(provider, model, chatMessages, creds, {
-      maxRetries: 3,
-      maxTokens: provider === "openai" ? 1000 : 2000,
-    });
+    const aiResponse = await callLLM(
+      provider,
+      selectedModel,
+      chatMessages,
+      creds,
+      {
+        maxRetries: 3,
+        maxTokens: provider === "openai" ? 1000 : 2000,
+      }
+    );
 
     if (!aiResponse) {
       return NextResponse.json(
@@ -76,7 +86,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       content: aiResponse,
       provider,
-      model,
+      model: selectedModel,
     });
   } catch (error) {
     console.error("Chat API error:", error);

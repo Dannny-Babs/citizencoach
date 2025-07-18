@@ -6,6 +6,7 @@ import { CredsModal } from "@/components/CredsModal"
 import { ModelSwitcher } from "@/components/modelSwithcer"
 import { useChat } from "@/hooks/useChat"
 import { Toaster } from "sonner"
+import { FlashcardProvider } from "@/context/FlashcardContext";
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const { provider, setProvider, model, setModel } = useChat()
@@ -41,7 +42,9 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <CredsProvider>
-      <LayoutContent>{children}</LayoutContent>
+      <FlashcardProvider>
+        <LayoutContent>{children}</LayoutContent>
+      </FlashcardProvider>
     </CredsProvider>
   )
 }

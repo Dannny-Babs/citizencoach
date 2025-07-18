@@ -12,6 +12,16 @@ export function useChat() {
   const [model, setModel] = useState("gpt-4o-mini");
   const { creds } = useContext(CredsContext);
 
+  // Update model when provider changes
+  const setProviderAndModel = (newProvider: Provider) => {
+    setProvider(newProvider);
+    if (newProvider === "openai") {
+      setModel("gpt-4o-mini");
+    } else if (newProvider === "gemini") {
+      setModel("gemini-1.5-flash");
+    }
+  };
+
   const sendMessage = useCallback(
     async (content: string) => {
       const userMessage: Message = {
@@ -84,7 +94,7 @@ export function useChat() {
     sendMessage,
     clearChat,
     provider,
-    setProvider,
+    setProvider: setProviderAndModel,
     model,
     setModel,
   };

@@ -6,6 +6,7 @@ import { Button } from './ui/button';
 import ReactMarkdown from 'react-markdown';
 import { Components } from 'react-markdown';
 import { toast } from 'sonner';
+import { useFlashcardContext } from "../context/FlashcardContext";
 
 interface MessageBubbleProps {
     message: Message;
@@ -84,6 +85,8 @@ const markdownComponents: Components = {
 export function MessageBubble({ message }: MessageBubbleProps) {
     const isUser = message.role === 'user';
 
+    const { addFlashcard } = useFlashcardContext();
+
     const handleCopyMessage = async () => {
         try {
             await navigator.clipboard.writeText(message.content);
@@ -97,9 +100,9 @@ export function MessageBubble({ message }: MessageBubbleProps) {
     };
 
     const handleSaveAsFlashcard = () => {
-        // TODO: Implement save to flashcard functionality
         try {
-            // TODO: Implement save to flashcard functionality
+            // Use the message content as the answer, and a generic question prompt
+            addFlashcard("What does this mean?", message.content);
             toast.success('Flashcard saved');
         } catch (error) {
             console.error('Failed to save flashcard:', error);
