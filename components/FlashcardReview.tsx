@@ -2,6 +2,78 @@
 
 import { useState } from 'react';
 import { useFlashcards } from '../hooks/useFlashcards';
+import ReactMarkdown from 'react-markdown';
+import { Components } from 'react-markdown';
+
+// Enhanced markdown components for flashcard rendering
+const markdownComponents: Components = {
+    h1: ({ children }) => (
+        <h1 className="text-lg font-bold mt-4 mb-4 text-gray-900">
+            {children}
+        </h1>
+    ),
+    h2: ({ children }) => (
+        <h2 className="text-base font-bold mt-3 mb-4 text-gray-900">
+            {children}
+        </h2>
+    ),
+    h3: ({ children }) => (
+        <h3 className="text-sm font-bold mt-2 mb-4 text-gray-900">
+            {children}
+        </h3>
+    ),
+    strong: ({ children }) => (
+        <strong className="font-semibold text-gray-900">
+            {children}
+        </strong>
+    ),
+    p: ({ children }) => (
+        <p className="mb-2 leading-relaxed last:mb-0">
+            {children}
+        </p>
+    ),
+    ul: ({ children }) => (
+        <ul className="list-disc list-outside mb-2 ml-4 space-y-1">
+            {children}
+        </ul>
+    ),
+    ol: ({ children }) => (
+        <ol className="list-decimal list-outside mb-2 ml-4 space-y-1">
+            {children}
+        </ol>
+    ),
+    li: ({ children }) => (
+        <li className="text-gray-900 leading-relaxed pl-1">
+            {children}
+        </li>
+    ),
+    a: ({ children, href, ...props }) => (
+        <a
+            href={href}
+            className="text-blue-500 hover:text-blue-600 hover:underline transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 rounded"
+            target={href?.startsWith('http') ? '_blank' : undefined}
+            rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+            {...props}
+        >
+            {children}
+        </a>
+    ),
+    code: ({ children }) => (
+        <code className="text-red-600 bg-red-50 px-1 py-0.5 rounded text-xs font-mono">
+            {children}
+        </code>
+    ),
+    pre: ({ children }) => (
+        <pre className="bg-gray-100 border border-gray-200 rounded-md p-3 overflow-x-auto text-sm font-mono mb-4">
+            {children}
+        </pre>
+    ),
+    blockquote: ({ children }) => (
+        <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-700 my-4">
+            {children}
+        </blockquote>
+    ),
+};
 
 export function FlashcardReview() {
     const { flashcards, updateFlashcard, getDueFlashcards } = useFlashcards();
@@ -115,7 +187,11 @@ export function FlashcardReview() {
                             </div>
 
                             <div className="text-lg leading-relaxed mb-8">
-                                {showAnswer ? currentCard.answer : currentCard.question}
+                                <div className="markdown-content">
+                                    <ReactMarkdown components={markdownComponents}>
+                                        {showAnswer ? currentCard.answer : currentCard.question}
+                                    </ReactMarkdown>
+                                </div>
                             </div>
 
                             {!showAnswer ? (

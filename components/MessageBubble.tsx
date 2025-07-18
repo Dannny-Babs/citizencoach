@@ -101,12 +101,45 @@ export function MessageBubble({ message }: MessageBubbleProps) {
 
     const handleSaveAsFlashcard = () => {
         try {
-            // Use the message content as the answer, and a generic question prompt
-            addFlashcard("What does this mean?", message.content);
-            toast.success('Flashcard saved');
+            // Generate a better flashcard using AI summarization
+            generateFlashcardFromContent(message.content);
         } catch (error) {
             console.error('Failed to save flashcard:', error);
             toast.error('Failed to save flashcard');
+        }
+    };
+
+    const generateFlashcardFromContent = async (content: string) => {
+        try {
+            const response = await fetch('/api/generate-flashcards', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ content }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to generate flashcard');
+            }
+
+            const data = await response.json();
+
+            if (data.flashcards && data.flashcards.length > 0) {
+                // Save the first generated flashcard
+                const { question, answer } = data.flashcards[0];
+                addFlashcard(question, answer);
+                toast.success('Flashcard generated and saved');
+            } else {
+                // Fallback to simple flashcard if generation fails
+                addFlashcard("What does this mean?", content);
+                toast.success('Flashcard saved');
+            }
+        } catch (error) {
+            console.error('Error generating flashcard:', error);
+            // Fallback to simple flashcard
+            addFlashcard("What does this mean?", content);
+            toast.success('Flashcard saved');
         }
     };
 
